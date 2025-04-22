@@ -1,0 +1,31 @@
+# Python bytecode files
+*.py[cod]
+__pycache__/
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Virtual environment directories
+venv/
+.env/
+
+# IDE / editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Test and coverage
+*.coverage
+*.hypothesis/
+.coverage.*
+nosetests.xml
+test-reports/
+
+# Other files to ignore
+*.log
+*.pot
+*.pyc
+*.pyo
