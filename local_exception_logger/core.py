@@ -9,10 +9,16 @@ from typing import Optional, Type
 
 
 class LocalExceptionLogger:
-    def __init__(self, report_dir: str = "crash_reports", max_breadcrumbs: int = 100):
+    def __init__(
+        self,
+        report_dir: str = "crash_reports",
+        max_breadcrumbs: int = 100,
+        locals_filter: list | None = None,
+    ):
         self.report_dir = report_dir
         self.max_breadcrumbs = max_breadcrumbs
         self.breadcrumbs = []
+        self.locals_filter = locals_filter or []
 
         os.makedirs(self.report_dir, exist_ok=True)
         self._setup_logging()
@@ -59,7 +65,11 @@ class LocalExceptionLogger:
                     "file": frame.f_code.co_filename,
                     "line": tb.tb_lineno,
                     "function": frame.f_code.co_name,
-                    "locals": {k: repr(v) for k, v in frame.f_locals.items()},
+                    "locals": {
+                        k: repr(v)
+                        for k, v in frame.f_locals.items()
+                        if k not in self.locals_filter
+                    },
                 }
             )
             tb = tb.tb_next
